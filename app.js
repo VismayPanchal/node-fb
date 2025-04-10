@@ -1,11 +1,12 @@
 var express = require("express");
 var app = express();
 var bodyParser = require('body-parser')
-var authroute = require('./route/register')
+var authroute = require('./route/userRoutes')
 var testRoute = require('./route/testRoute')
 
 app.use(bodyParser.json({ limit: "15MB" }))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.json());
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -19,6 +20,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/api/register", authroute.router);
-app.use("/api/test", testRoute.router);
-app.listen(3044);
+app.use("/user", authroute.router);
+app.use("/test", testRoute.router);
+const PORT = 3044;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+});

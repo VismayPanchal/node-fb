@@ -1,6 +1,7 @@
 var router = require('express').Router()
-var registerController = require('../controller/registerController')
+var registerController = require('../controller/userController')
+var verifyFirebaseToken = require('../middleware/validateuser')
 
-router.post('/testRoute', registerController.huhu)
+router.get('/testRoute', registerController.huhu)
 
 module.exports = { router }
