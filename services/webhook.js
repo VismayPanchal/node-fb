@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { webhhoksecret, locationsURL, alertsURL, ngrokURL } = require('../config/config.json')
+const { webhhoksecret, TomorrowAPIKEY, alertsURL, ngrokURL } = require('../config/config.json')
 const fetch = require("node-fetch");
 
 // secret that was appended to the webhook
@@ -28,10 +28,11 @@ module.exports = {
         }
     },
 
-    createAlert: async function ({ locationName, lat, lng, condition, threshold }) {
+    createAlert: async function ({ locationName = "Your location", lat, lng, condition = 'temprature', threshold = 35 }) {
         const payload = {
             name: `Alert for ${locationName}`,
             enabled: true,
+            insight: "temperature", // 🔥 REQUIRED
             notifications: [
                 {
                     endpoint: ngrokURL,
@@ -67,7 +68,7 @@ module.exports = {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "apikey": process.env.TOMORROW_API_KEY
+                    "apikey": TomorrowAPIKEY
                 },
                 body: JSON.stringify(payload)
             });
