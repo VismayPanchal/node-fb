@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser')
 var authroute = require('./route/userRoutes')
 var testRoute = require('./route/testRoute')
+var alertRoute = require('./route/alertRoute')
 
 app.use(bodyParser.json({ limit: "15MB" }))
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 app.use("/user", authroute.router);
 app.use("/test", testRoute.router);
+app.use("/alert", alertRoute.router);
 const PORT = 3044;
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
